@@ -15,7 +15,7 @@ class CreateSubmenuTable extends Migration
     {
         Schema::create('submenu', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('parent_id')->unsigned()->default(0);
+            $table->bigInteger('parent_id')->unsigned();
             $table->bigInteger('child_id')->unsigned();
 
             // $table->foreign('parent_id')
