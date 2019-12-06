@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRelationsTable extends Migration
+class AddForeignKeysToSubmenuTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,7 @@ class CreateRelationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('relations', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('parent_id')->unsigned()->default(0);
-            $table->bigInteger('child_id')->unsigned();
-
+        Schema::table('submenu', function (Blueprint $table) {
             $table->foreign('parent_id')
                   ->references('id')->on('elements')
                   ->onDelete('cascade');
@@ -35,6 +31,8 @@ class CreateRelationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('relations');
+        Schema::table('submenu', function (Blueprint $table) {
+            $table->dropForeign(['parent_id', 'child_id']);
+        });
     }
 }
